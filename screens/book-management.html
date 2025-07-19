@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Management - Bookstore Admin</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <img src="../assets/images/avatar.png" alt="Admin Avatar" class="avatar">
+                <h5>Bookstore Admin</h5>
+            </div>
+            <ul class="list-unstyled components">
+                <li>
+                    <a href="../index.html"><i class="fas fa-home"></i> Dashboard</a>
+                </li>
+                <li class="active">
+                    <a href="book-management.html"><i class="fas fa-book"></i> Book Management</a>
+                </li>
+                <li>
+                    <a href="user-management.html"><i class="fas fa-users"></i> User Management</a>
+                </li>
+                <li>
+                    <a href="./orders.html"><i class="fas fa-shopping-cart"></i> Orders</a>
+                </li>
+                <li>
+                    <a href="./store-management.html"><i class="fas fa-store"></i> Stores</a>
+                </li>
+                <li>
+                    <a href="./settings.html"><i class="fas fa-cog"></i> Settings</a>
+                </li>
+            </ul>
+            <div class="sidebar-footer">
+                <a href="#"><i class="fas fa-question-circle"></i> Help and Docs</a>
+            </div>
+        </nav>
+
+        <!-- Page Content -->
+        <div class="overlay"></div>
+        <div id="content">
+            <!-- Top Navigation -->
+            <nav class="navbar navbar-expand-lg navbar-dark">
+                <div class="container-fluid d-flex align-items-center">
+                    <button class="btn mobile-nav d-block d-lg-none" id="sidebarCollapse">
+                        <i class="fas fa-bars text-white"></i>
+                    </button>
+                    <div class="header-content">
+                        <div class="header-title">
+                            <h2 class="text-white fw-bold">Books</h2>
+                            <p class="text-white-50 small">Manage and track all books in the inventory</p>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <button class="btn btn-primary btn-add-book me-3" data-bs-toggle="modal" data-bs-target="#addBookModal" data-bs-toggle="tooltip" data-bs-placement="top" title="Add Book">
+                                <i class="fas fa-plus"></i> <span class="d-none d-lg-inline">Add Book</span>
+                            </button>
+                            <button class="btn btn-dark">
+                                <i class="fas fa-sign-out-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Book Management Content -->
+            <div class="container-fluid">
+                <!-- Search and Filters -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-lg-6">
+                                <div class="input-group">
+                                    <span class="input-group-text bg-transparent border-end-0">
+                                        <i class="fas fa-search"></i>
+                                    </span>
+                                    <input type="text" class="form-control border-start-0" placeholder="Search by title, author, or ISBN">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="d-flex gap-3">
+                                    <select class="form-select">
+                                        <option value="">Category</option>
+                                        <option>Fantasy</option>
+                                        <option>Science Fiction</option>
+                                        <option>Mystery</option>
+                                        <option>Romance</option>
+                                        <option>Thriller</option>
+                                        <option>Historical Fiction</option>
+                                    </select>
+                                    <select class="form-select">
+                                        <option value="">Author</option>
+                                        <option>Evelyn Reed</option>
+                                        <option>Lucas Stone</option>
+                                        <option>Olivia Carter</option>
+                                    </select>
+                                    <select class="form-select">
+                                        <option value="">Publication Date</option>
+                                        <option>Newest First</option>
+                                        <option>Oldest First</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Books Table -->
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle">
+                                <thead>
+                                    <tr>
+                                        <th>Image</th>
+                                        <th>Title</th>
+                                        <th>Author</th>
+                                        <th>Category</th>
+                                        <th>Quantity</th>
+                                        <th>Price (₹)</th>
+                                        <th>Store ID</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Book data will be dynamically inserted here by script.js -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Book Modal -->
+    <div class="modal fade" id="addBookModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add New Book</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
+                    <form id="addBookForm">
+                        <input type="hidden" id="bookId" name="bookId">
+                        <div class="row g-3">
+                            <!-- Left Column -->
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="title" class="form-label">Title</label>
+                                    <input type="text" class="form-control" id="title" name="title" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="author" class="form-label">Author</label>
+                                    <input type="text" class="form-control" id="author" name="author" required>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="coverImageUrl" class="form-label">Cover Image URL</label>
+                                    <input type="url" class="form-control" id="coverImageUrl" name="coverImageUrl" placeholder="https://example.com/image.jpg">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="authorBio" class="form-label">Author Bio</label>
+                                    <textarea class="form-control" id="authorBio" name="authorBio" rows="4"></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Right Column -->
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="genre" class="form-label">Genre</label>
+                                            <select class="form-select" id="genre" name="genre" required>
+                                                <option value="" disabled selected>Select Genre</option>
+                                                <option>Fiction</option>
+                                                <option>Fantasy</option>
+                                                <option>Science Fiction</option>
+                                                <option>Mystery</option>
+                                                <option>Romance</option>
+                                                <option>Thriller</option>
+                                                <option>Non-Fiction</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="store" class="form-label">Store</label>
+                                            <select class="form-select" id="store" name="store" required>
+                                                <option value="" disabled selected>Loading stores...</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label for="price" class="form-label">Price</label>
+                                        <input type="number" class="form-control" id="price" name="price" step="0.01" required>
+                                    </div>
+                                    <div class="col-6">
+                                        <label for="originalPrice" class="form-label">Original Price</label>
+                                        <input type="number" class="form-control" id="originalPrice" name="originalPrice" step="0.01">
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-6">
+                                        <label for="quantity" class="form-label">Quantity</label>
+                                        <input type="number" class="form-control" id="quantity" name="quantity" required>
+                                    </div>
+                                    <div class="col-6">
+                                        <label for="rating" class="form-label">Rating</label>
+                                        <input type="number" class="form-control" id="rating" name="rating" step="0.1" min="0" max="5">
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-12">
+                                        <label class="form-label">Image Preview</label>
+                                        <img id="imagePreview" src="" alt="Image Preview" class="img-fluid rounded border" style="max-height: 100px; display: none; margin-top: 5px; margin-left: 40%;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Full-width Textareas -->
+                        <div class="row mt-3">
+                            <div class="col-12">
+                                <div class="mb-3">
+                                    <label for="description" class="form-label">Description</label>
+                                    <textarea class="form-control" id="description" name="description" rows="5"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="preview" class="form-label">Preview</label>
+                                    <textarea class="form-control" id="preview" name="preview" rows="5"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" id="addBookSubmitBtn" class="btn btn-primary" form="addBookForm">Add Book</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- View Book Modal -->
+    <div class="modal fade" id="viewBookModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="viewBookTitle">Book Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" style="max-height: 80vh; overflow-y: auto;">
+                    <div class="text-center mb-4">
+                        <img id="viewCoverImage" src="" alt="Book Cover" class="img-fluid rounded" style="max-height: 300px;">
+                    </div>
+                    <div id="viewBookDetails" class="container-fluid"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="../assets/js/main.js"></script>
+    <script type="module" src="../assets/js/book-management.js"></script>
+</body>
+</html>
