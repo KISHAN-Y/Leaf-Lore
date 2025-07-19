@@ -5,6 +5,7 @@ import {
     getDocs,
     addDoc,
     doc,
+    getDoc,
     updateDoc,
     deleteDoc,
     setDoc
@@ -12,6 +13,10 @@ import {
 
 // Your web app's Firebase configuration
 // REPLACE WITH YOUR FIREBASE CONFIG
+// ❗ IMPORTANT: Replace the placeholder values below with your actual Firebase project credentials.
+// You can find these in your Firebase project settings:
+// Project Settings > General > Your apps > SDK setup and configuration
+
 const firebaseConfig = {
     apiKey: "AIzaSyASVgYJYiP7B0E1P29prTSbsTiSJvLmPXU",
     authDomain: "leaf-and-lore.firebaseapp.com",
@@ -31,6 +36,7 @@ export {
     getDocs, 
     addDoc, 
     doc, 
+    getDoc,
     updateDoc, 
     deleteDoc,
     setDoc 
