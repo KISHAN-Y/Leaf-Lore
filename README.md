@@ -1,7 +1,7 @@
 <div class="border border-border rounded-lg bg-background p-6 shadow-sm"><div class="prose prose-sm md:prose-base lg:prose-lg max-w-none prose-headings:font-bold prose-a:text-blue-600" style="user-select: none;"><div id="top" class="">
 
 <div align="center" class="text-center">
-<h1>LEAF-LORE</h1>
+<h1>LEAF & LORE: A BookShop</h1>
 <p><em>Empowering Seamless Bookstore Management at Scale</em></p>
 
 <img alt="last-commit" src="https://img.shields.io/github/last-commit/KISHAN-Y/Leaf-Lore?style=flat&amp;logo=git&amp;logoColor=white&amp;color=0080ff" class="inline-block mx-1" style="margin: 0px 2px;">
