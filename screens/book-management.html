@@ -88,25 +88,13 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="d-flex gap-3">
-                                    <select class="form-select">
-                                        <option value="">Category</option>
-                                        <option>Fantasy</option>
-                                        <option>Science Fiction</option>
-                                        <option>Mystery</option>
-                                        <option>Romance</option>
-                                        <option>Thriller</option>
-                                        <option>Historical Fiction</option>
+                                    <select class="form-select" id="authorFilter">
+                                        <option value=""> All Author</option>
+                                        <!-- Author options will be populated dynamically -->
                                     </select>
-                                    <select class="form-select">
-                                        <option value="">Author</option>
-                                        <option>Evelyn Reed</option>
-                                        <option>Lucas Stone</option>
-                                        <option>Olivia Carter</option>
-                                    </select>
-                                    <select class="form-select">
-                                        <option value="">Publication Date</option>
-                                        <option>Newest First</option>
-                                        <option>Oldest First</option>
+                                    <select class="form-select" id="dateSort">
+                                        <option value="newest" selected>Newest First</option>
+                                        <option value="oldest">Oldest First</option>
                                     </select>
                                 </div>
                             </div>

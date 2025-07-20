@@ -1,13 +1,61 @@
 import { db, collection, getDocs, doc, updateDoc, deleteDoc, setDoc } from './firebase-config.js';
 
 let booksData = [];
-let filteredBooksData = [];
+// State variables for filters and sorting
+let currentSearchTerm = '';
+let currentAuthor = '';
+let currentSort = 'newest'; // Default sort order
 
 async function fetchBooks() {
     const booksCollection = collection(db, 'books');
     const booksSnapshot = await getDocs(booksCollection);
     booksData = booksSnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
-    displayBooks();
+    populateAuthorFilter();
+    applyFiltersAndDisplay();
+}
+
+function populateAuthorFilter() {
+    const authorFilter = document.getElementById('authorFilter');
+    if (!authorFilter) return;
+
+    // Get a unique, sorted list of authors
+    const authors = [...new Set(booksData.map(book => book.author))].sort();
+    
+    authorFilter.innerHTML = '<option value=""> All Author</option>'; // Reset and add default option
+
+    authors.forEach(author => {
+        const option = document.createElement('option');
+        option.value = author;
+        option.textContent = author;
+        authorFilter.appendChild(option);
+    });
+}
+
+function applyFiltersAndDisplay() {
+    let processedBooks = [...booksData];
+
+    // 1. Filter by search term (title, author, or ID as ISBN)
+    if (currentSearchTerm) {
+        processedBooks = processedBooks.filter(book => 
+            book.title.toLowerCase().includes(currentSearchTerm.toLowerCase()) ||
+            book.author.toLowerCase().includes(currentSearchTerm.toLowerCase()) ||
+            (book.id && book.id.toString().includes(currentSearchTerm))
+        );
+    }
+
+    // 2. Filter by selected author
+    if (currentAuthor) {
+        processedBooks = processedBooks.filter(book => book.author === currentAuthor);
+    }
+
+    // 3. Sort by date (using book ID as a proxy for creation date)
+    if (currentSort === 'newest') {
+        processedBooks.sort((a, b) => parseInt(b.id, 10) - parseInt(a.id, 10));
+    } else if (currentSort === 'oldest') {
+        processedBooks.sort((a, b) => parseInt(a.id, 10) - parseInt(b.id, 10));
+    }
+    
+    displayBooks(processedBooks);
 }
 
 // Helper function to generate star ratings
@@ -40,12 +88,11 @@ function getQuantityBadge(quantity) {
     }
 }
 
-function displayBooks() {
+function displayBooks(booksToDisplay) {
     const mainTableBody = document.querySelector('table:not(.low-stock-alerts) tbody');
 
     if (mainTableBody) {
         mainTableBody.innerHTML = '';
-        const booksToDisplay = filteredBooksData.length > 0 ? filteredBooksData : booksData;
         booksToDisplay.forEach(book => {
             const row = document.createElement('tr');
             row.innerHTML = `
@@ -68,6 +115,7 @@ function displayBooks() {
         });
     }
 }
+
 
 window.openViewModal = function(bookId) {
     const book = booksData.find(b => b.id === bookId);
@@ -197,7 +245,6 @@ window.updateBook = async function(bookId, formData) {
 };
 
 window.addBook = async function(formData) {
-    // Find the highest numeric ID from the existing books
     let maxId = 0;
     booksData.forEach(book => {
         const numericId = parseInt(book.id, 10);
@@ -206,13 +253,12 @@ window.addBook = async function(formData) {
         }
     });
 
-    // If no numeric ID found, start from 1022, so the first one will be 1023
     const newId = (maxId > 0 ? maxId + 1 : 1023).toString();
     const storeSelect = document.getElementById('store');
     const selectedStoreOption = storeSelect.options[storeSelect.selectedIndex];
 
     const newBook = {
-        id: newId, // Storing the new ID within the document
+        id: newId,
         title: formData.get('title'),
         author: formData.get('author'),
         authorBio: formData.get('authorBio'),
@@ -227,36 +273,9 @@ window.addBook = async function(formData) {
         description: formData.get('description'),
         preview: formData.get('preview'),
     };
-    // Use setDoc to create a document with a custom ID
     const newBookRef = doc(db, 'books', newId);
     await setDoc(newBookRef, newBook);
     await fetchBooks();
-}
-
-window.editBook = function(bookId) {
-    const book = booksData.find(b => b.id === bookId);
-    if (!book) return;
-    console.log('Editing book:', book);
-    // Modal population logic would go here
-}
-
-window.deleteBook = async function(bookId) {
-    if (confirm('Are you sure you want to delete this book?')) {
-        await deleteDoc(doc(db, 'books', bookId));
-        await fetchBooks();
-    }
-}
-
-function handleSearch(searchTerm) {
-    if (!searchTerm) {
-        filteredBooksData = [];
-    } else {
-        filteredBooksData = booksData.filter(book => 
-            book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            book.author.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-    }
-    displayBooks();
 }
 
 async function populateStoresDropdown() {
@@ -272,7 +291,7 @@ async function populateStoresDropdown() {
         storesSnapshot.forEach(doc => {
             const store = doc.data();
             const option = document.createElement('option');
-            option.value = store.id; // Using the 'id' field from the document
+            option.value = store.id;
             option.textContent = store.name;
             storeSelect.appendChild(option);
         });
@@ -286,12 +305,32 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchBooks();
     populateStoresDropdown();
 
+    // Event Listeners for filters
     const searchInput = document.querySelector('input[placeholder="Search by title, author, or ISBN"]');
     if (searchInput) {
-        searchInput.addEventListener('input', (e) => handleSearch(e.target.value));
+        searchInput.addEventListener('input', (e) => {
+            currentSearchTerm = e.target.value;
+            applyFiltersAndDisplay();
+        });
     }
 
-    const addBookModal = document.getElementById('addBookModal');
+    const authorFilter = document.getElementById('authorFilter');
+    if (authorFilter) {
+        authorFilter.addEventListener('change', (e) => {
+            currentAuthor = e.target.value;
+            applyFiltersAndDisplay();
+        });
+    }
+
+    const dateSort = document.getElementById('dateSort');
+    if (dateSort) {
+        dateSort.addEventListener('change', (e) => {
+            currentSort = e.target.value;
+            applyFiltersAndDisplay();
+        });
+    }
+
+    // Event delegation for action buttons
     document.body.addEventListener('click', function(event) {
         const editBtn = event.target.closest('.edit-btn');
         if (editBtn) {
@@ -314,6 +353,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    const addBookModal = document.getElementById('addBookModal');
     if (addBookModal) {
         const addBookForm = addBookModal.querySelector('form');
         const imagePreview = document.getElementById('imagePreview');
