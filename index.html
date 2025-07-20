@@ -74,29 +74,26 @@
                 <!-- Overview Section -->
                 <div class="row overview-cards">
                     <div class="col-md-4 mb-4">
-                        <div class="card">
+                        <div class="card" data-stat="total-sales">
                             <div class="card-body">
-                                <h5>Total Sales</h5>
-                                <h2>$25,000</h2>
-                                <p class="trend positive">+10%</p>
+                                <h5><i class="fas fa-coins me-2"></i>Total Sales</h5>
+                                <h2 class="stat-value">Loading...</h2>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-4 mb-4">
-                        <div class="card">
+                        <div class="card" data-stat="books-sold">
                             <div class="card-body">
-                                <h5>Books Sold</h5>
-                                <h2>1,500</h2>
-                                <p class="trend positive">+5%</p>
+                                <h5><i class="fas fa-book me-2"></i>Books Sold</h5>
+                                <h2 class="stat-value">Loading...</h2>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-4 mb-4">
-                        <div class="card">
+                        <div class="card" data-stat="active-users">
                             <div class="card-body">
-                                <h5>Active Users</h5>
-                                <h2>300</h2>
-                                <p class="trend positive">+8%</p>
+                                <h5><i class="fas fa-users me-2"></i>Active Users</h5>
+                                <h2 class="stat-value">Loading...</h2>
                             </div>
                         </div>
                     </div>
@@ -109,7 +106,7 @@
                             <div class="card-body">
                                 <h5 class="card-title">Low Stock Alerts</h5>
                                 <div class="table-responsive">
-                                    <table class="table">
+                                    <table class="table" id="low-stock-table">
                                         <thead>
                                             <tr>
                                                 <th>Book Title</th>
@@ -120,22 +117,9 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td data-label="Book Title">The Secret Garden</td>
-                                                <td data-label="Author">Frances Hodgson Burnett</td>
-                                                <td data-label="Stock Level"><span class="badge bg-danger">Low</span></td>
-                                                <td data-label="Action"><button class="btn btn-sm btn-outline-primary">Restock</button></td>
-                                            </tr>
-                                            <tr>
-                                                <td data-label="Book Title">Pride and Prejudice</td>
-                                                <td data-label="Author">Jane Austen</td>
-                                                <td data-label="Stock Level"><span class="badge bg-danger">Low</span></td>
-                                                <td data-label="Action"><button class="btn btn-sm btn-outline-primary">Restock</button></td>
-                                            </tr>
-                                            <tr>
-                                                <td data-label="Book Title">To Kill a Mockingbird</td>
-                                                <td data-label="Author">Harper Lee</td>
-                                                <td data-label="Stock Level"><span class="badge bg-danger">Low</span></td>
-                                                <td data-label="Action"><button class="btn btn-sm btn-outline-primary">Restock</button></td>
+                                                <td colspan="4" class="text-center text-muted">
+                                                    <i class="fas fa-spinner fa-spin me-2"></i>Loading stock data...
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -153,24 +137,10 @@
                                 <h5 class="card-title">Activity Feed</h5>
                                 <div class="activity-feed">
                                     <div class="activity-item">
-                                        <i class="fas fa-shopping-cart"></i>
+                                        <i class="fas fa-spinner fa-spin"></i>
                                         <div class="activity-content">
-                                            <h6>New Order Placed</h6>
-                                            <p>Order #12345</p>
-                                        </div>
-                                    </div>
-                                    <div class="activity-item">
-                                        <i class="fas fa-book"></i>
-                                        <div class="activity-content">
-                                            <h6>Book Restocked</h6>
-                                            <p>The Secret Garden</p>
-                                        </div>
-                                    </div>
-                                    <div class="activity-item">
-                                        <i class="fas fa-user"></i>
-                                        <div class="activity-content">
-                                            <h6>User Registered</h6>
-                                            <p>Sarah Miller</p>
+                                            <h6>Loading Activity</h6>
+                                            <p>Fetching recent activity from Firebase...</p>
                                         </div>
                                     </div>
                                 </div>
@@ -184,11 +154,16 @@
 
     <!-- Bootstrap JS and dependencies -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Custom JS -->
+    
+    <!-- Firebase SDK v8 (Compatible with dashboard-firebase.js) -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-    <script src="assets/js/firebase-config.js"></script>
+    
+    <!-- Custom JS -->
     <script src="assets/js/script.js"></script>
     <script src="assets/js/main.js"></script>
+    
+    <!-- Firebase Dashboard Integration -->
+    <script src="assets/js/dashboard-firebase.js"></script>
 </body>
 </html>
