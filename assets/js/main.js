@@ -46,7 +46,13 @@ const getSession = () => {
 };
 const destroySession = () => localStorage.removeItem('admin_session');
 const protectPage = () => {
-  if (!getSession()) window.location.href = '../index.html';
+  // If a session exists, the page is protected, so do nothing.
+  if (getSession()) {
+    return;
+  }
+
+  // If no session, redirect to the login page.
+  window.location.href = '../index.html' , 'index.html';
 };
 
 // --- LOGIN LOGIC ---
@@ -103,13 +109,15 @@ if (loginForm) {
 
 // --- LOGOUT LOGIC ---
 const setupLogoutButtons = () => {
-  [...document.querySelectorAll('.btn-dark, .btn-logout')].forEach((btn) => {
-    if (btn.innerHTML.includes('fa-sign-out-alt')) {
-      btn.addEventListener('click', () => {
-        destroySession();
-        window.location.href = 'index.html';
-      });
-    }
+  // Select only buttons with the specific data-action attribute.
+  document.querySelectorAll('[data-action="logout"]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      destroySession();
+      // After logout, always redirect to the root login page.
+      window.location.href = window.location.pathname.includes('/screens/')
+        ? '../index.html'
+        : 'index.html';
+    });
   });
 };
 
@@ -245,12 +253,25 @@ const setupPasswordResetFlow = () => {
 };
 
 // --- PAGE INITIALIZATION ---
+// --- PAGE INITIALIZATION ---
 window.addEventListener('DOMContentLoaded', () => {
   setupLogoutButtons();
   setupPasswordResetFlow();
 
   const path = window.location.pathname;
-  if (!path.endsWith('index.html') && !path.endsWith('/')) protectPage();
+  // Check if we are on the login page (root or index.html)
+  const onLoginPage = path.endsWith('/') || path.endsWith('index.html');
+
+  if (onLoginPage) {
+    // If we are on the login page and a session exists, redirect to the dashboard.
+    if (getSession()) {
+      window.location.href = 'dashboard.html';
+    }
+  } else {
+    // For any other page, it's a protected route. Check for a session.
+    // If no session, the protectPage function will handle the redirect.
+    protectPage();
+  }
 });
 
 document.addEventListener('DOMContentLoaded', () => {
