@@ -46,7 +46,13 @@ const getSession = () => {
 };
 const destroySession = () => localStorage.removeItem('admin_session');
 const protectPage = () => {
-  if (!getSession()) window.location.href = '../index.html';
+  if (!getSession()) {
+    // Determine correct path to index.html based on current location
+    const currentPath = window.location.pathname;
+    const isInScreensDirectory = currentPath.includes('/screens/');
+    const indexPath = isInScreensDirectory ? '../index.html' : 'index.html';
+    window.location.href = indexPath;
+  }
 };
 
 // --- LOGIN LOGIC ---
@@ -107,7 +113,7 @@ const setupLogoutButtons = () => {
     if (btn.innerHTML.includes('fa-sign-out-alt')) {
       btn.addEventListener('click', () => {
         destroySession();
-        window.location.href = '../index.html';
+        window.location.href = 'index.html';
       });
     }
   });
