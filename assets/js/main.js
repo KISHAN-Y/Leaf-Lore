@@ -46,7 +46,7 @@ const getSession = () => {
 };
 const destroySession = () => localStorage.removeItem('admin_session');
 const protectPage = () => {
-  if (!getSession()) window.location.href = '../login.html';
+  if (!getSession()) window.location.href = '../index.html';
 };
 
 // --- LOGIN LOGIC ---
@@ -93,7 +93,7 @@ if (loginForm) {
         { ...adminSessionData, adminId: foundId, loginTime: Date.now() },
         keepLoggedIn
       );
-      window.location.href = '../index.html';
+      window.location.href = 'dashboard.html';
       showSuccess('Login successful.');
     } catch {
         showError('Login failed. Try again.');
@@ -107,7 +107,7 @@ const setupLogoutButtons = () => {
     if (btn.innerHTML.includes('fa-sign-out-alt')) {
       btn.addEventListener('click', () => {
         destroySession();
-        window.location.href = '../login.html';
+        window.location.href = '../index.html';
       });
     }
   });
@@ -250,7 +250,7 @@ window.addEventListener('DOMContentLoaded', () => {
   setupPasswordResetFlow();
 
   const path = window.location.pathname;
-  if (!path.endsWith('login.html') && !path.endsWith('/')) protectPage();
+  if (!path.endsWith('index.html') && !path.endsWith('/')) protectPage();
 });
 
 document.addEventListener('DOMContentLoaded', () => {
