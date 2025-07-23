@@ -107,7 +107,7 @@ const setupLogoutButtons = () => {
     if (btn.innerHTML.includes('fa-sign-out-alt')) {
       btn.addEventListener('click', () => {
         destroySession();
-        window.location.href = 'index.html';
+        window.location.href = 'Leaf-Lore/index.html';
       });
     }
   });
@@ -251,7 +251,7 @@ window.addEventListener('DOMContentLoaded', () => {
   setupPasswordResetFlow();
 
   const path = window.location.pathname;
-  if (!path.endsWith('Leaf-Lore/index.html') && !path.endsWith('/')) protectPage();
+  if (!path.endsWith('index.html') && !path.endsWith('/')) protectPage();
 });
 
 document.addEventListener('DOMContentLoaded', () => {
