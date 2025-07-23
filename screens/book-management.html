@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,8 +14,11 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
-    <div id="unicorn" data-us-project="9LavQqV4nq9siFdVEwmk" style="width: 100vw; height: 100vh"></div>
+    <div id="lottie-background"
+        style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; overflow: hidden;">
+    </div>
     <div class="wrapper">
         <!-- Sidebar -->
         <nav id="sidebar">
@@ -62,11 +66,14 @@
                             <p class="text-white-50 small">Manage and track all books in the inventory</p>
                         </div>
                         <div class="d-flex align-items-center">
-                            <button class="btn btn-primary btn-add-book me-3" data-bs-toggle="modal" data-bs-target="#addBookModal" data-bs-toggle="tooltip" data-bs-placement="top" title="Add Book">
+                            <button class="btn btn-primary btn-add-book me-3" data-bs-toggle="modal"
+                                data-bs-target="#addBookModal" data-bs-toggle="tooltip" data-bs-placement="top"
+                                title="Add Book">
                                 <i class="fas fa-plus"></i> <span class="d-none d-lg-inline">Add Book</span>
                             </button>
-                            <button class="btn btn-dark">
-                                <i class="fas fa-sign-out-alt"></i>
+                            <button class="btn btn-logout">
+                                <span class="d-none d-sm-inline">Logout</span>
+                                <i class="fas fa-sign-out-alt ms-2"></i>
                             </button>
                         </div>
                     </div>
@@ -84,7 +91,8 @@
                                     <span class="input-group-text bg-transparent border-end-0">
                                         <i class="fas fa-search"></i>
                                     </span>
-                                    <input type="text" class="form-control border-start-0" placeholder="Search by title, author, or ISBN">
+                                    <input type="text" class="form-control border-start-0"
+                                        placeholder="Search by title, author, or ISBN">
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -156,7 +164,8 @@
 
                                 <div class="mb-3">
                                     <label for="coverImageUrl" class="form-label">Cover Image URL</label>
-                                    <input type="url" class="form-control" id="coverImageUrl" name="coverImageUrl" placeholder="https://example.com/image.jpg">
+                                    <input type="url" class="form-control" id="coverImageUrl" name="coverImageUrl"
+                                        placeholder="https://example.com/image.jpg">
                                 </div>
                                 <div class="mb-3">
                                     <label for="authorBio" class="form-label">Author Bio</label>
@@ -194,27 +203,33 @@
                                 <div class="row">
                                     <div class="col-6">
                                         <label for="price" class="form-label">Price</label>
-                                        <input type="number" class="form-control" id="price" name="price" step="0.01" required>
+                                        <input type="number" class="form-control" id="price" name="price" step="0.01"
+                                            required>
                                     </div>
                                     <div class="col-6">
                                         <label for="originalPrice" class="form-label">Original Price</label>
-                                        <input type="number" class="form-control" id="originalPrice" name="originalPrice" step="0.01">
+                                        <input type="number" class="form-control" id="originalPrice"
+                                            name="originalPrice" step="0.01">
                                     </div>
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-6">
                                         <label for="quantity" class="form-label">Quantity</label>
-                                        <input type="number" class="form-control" id="quantity" name="quantity" required>
+                                        <input type="number" class="form-control" id="quantity" name="quantity"
+                                            required>
                                     </div>
                                     <div class="col-6">
                                         <label for="rating" class="form-label">Rating</label>
-                                        <input type="number" class="form-control" id="rating" name="rating" step="0.1" min="0" max="5">
+                                        <input type="number" class="form-control" id="rating" name="rating" step="0.1"
+                                            min="0" max="5">
                                     </div>
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-12">
                                         <label class="form-label">Image Preview</label>
-                                        <img id="imagePreview" src="" alt="Image Preview" class="img-fluid rounded border" style="max-height: 100px; display: none; margin-top: 5px; margin-left: 40%;">
+                                        <img id="imagePreview" src="" alt="Image Preview"
+                                            class="img-fluid rounded border"
+                                            style="max-height: 100px; display: none; margin-top: 5px; margin-left: 40%;">
                                     </div>
                                 </div>
                             </div>
@@ -225,7 +240,8 @@
                             <div class="col-12">
                                 <div class="mb-3">
                                     <label for="description" class="form-label">Description</label>
-                                    <textarea class="form-control" id="description" name="description" rows="5"></textarea>
+                                    <textarea class="form-control" id="description" name="description"
+                                        rows="5"></textarea>
                                 </div>
                                 <div class="mb-3">
                                     <label for="preview" class="form-label">Preview</label>
@@ -237,7 +253,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" id="addBookSubmitBtn" class="btn btn-primary" form="addBookForm">Add Book</button>
+                    <button type="submit" id="addBookSubmitBtn" class="btn btn-primary" form="addBookForm">Add
+                        Book</button>
                 </div>
             </div>
         </div>
@@ -253,7 +270,8 @@
                 </div>
                 <div class="modal-body" style="max-height: 80vh; overflow-y: auto;">
                     <div class="text-center mb-4">
-                        <img id="viewCoverImage" src="" alt="Book Cover" class="img-fluid rounded" style="max-height: 300px;">
+                        <img id="viewCoverImage" src="" alt="Book Cover" class="img-fluid rounded"
+                            style="max-height: 300px;">
                     </div>
                     <div id="viewBookDetails" class="container-fluid"></div>
                 </div>
@@ -263,18 +281,41 @@
             </div>
         </div>
     </div>
+    <!-- Toast Container -->
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1100;">
+        <div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert"
+            aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div id="toastMessage" class="toast-body"></div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
 
     <!-- Bootstrap JS and dependencies -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Custom JS -->
     <script type="module" src="../assets/js/main.js"></script>
     <script type="module" src="../assets/js/book-management.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.28/dist/unicornStudio.umd.js"></script>
+    <script
+        src="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.28/dist/unicornStudio.umd.js"></script>
     <script>
         // Will initialize every element with "data-us-project" or "data-us-project-src" on the page
         UnicornStudio.init().then(scenes => {
-          // scenes are ready
+            // scenes are ready
         });
-      </script>
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+    <script>
+        lottie.loadAnimation({
+            container: document.getElementById('lottie-background'),
+            renderer: 'svg',
+            loop: true,
+            autoplay: true,
+            path: '../assets/images/spring.json' // <-- update this path if needed
+        });
+    </script>
 </body>
+
 </html>

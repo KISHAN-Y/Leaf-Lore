@@ -202,7 +202,7 @@ class DashboardManager {
             
             console.log(`📉 Critical low stock books found: ${lowStockBooks.length}`);
             lowStockBooks.forEach(book => {
-                const stockValue = book.stock !== undefined ? book.stock : 'undefined';
+                const stockValue = parseInt(book.stock) || parseInt(book.quantity) || parseInt(book.stockLevel) || parseInt(book.inventory) || 0;
                 console.log(`⚠️  ALERT: '${book.title}' has only ${stockValue} units left!`);
             });
 
@@ -227,7 +227,7 @@ class DashboardManager {
                                 <span class="badge ${this.getStockBadgeClass(stockValue)}">${stockValue}</span>
                             </td>
                             <td data-label="Action">
-                                <button class="btn btn-sm btn-outline-primary" onclick="dashboard.restockBook('${book.id}')">
+                                <button class="btn btn-sm btn-outline-primary restock-btn" data-book-id="${book.id}">
                                     Restock
                                 </button>
                             </td>
@@ -603,12 +603,49 @@ class DashboardManager {
 let dashboard;
 document.addEventListener('DOMContentLoaded', function() {
     dashboard = new DashboardManager();
-    
-    // Setup real-time listeners after initial load
+    window.dashboard = dashboard;
     setTimeout(() => {
         dashboard.setupRealtimeListeners();
     }, 2000);
-});
 
-// Export for global access
-window.dashboard = dashboard;
+    // Restock modal event delegation
+    document.body.addEventListener('click', async function(e) {
+        const btn = e.target.closest('.restock-btn');
+        if (btn) {
+            console.log('[DEBUG] Restock button clicked');
+            const bookId = btn.getAttribute('data-book-id');
+            console.log('[DEBUG] Book ID:', bookId);
+            if (!bookId) return;
+            // Fix: compare IDs as strings
+            const book = dashboard.booksData.find(b => String(b.id) === String(bookId));
+            console.log('[DEBUG] Book found:', book);
+            if (!book) {
+                alert('Book not found in dashboard data.');
+                return;
+            }
+            document.getElementById('restockBookCover').src = book.coverImageUrl || 'assets/images/book-placeholder.jpg';
+            document.getElementById('restockBookTitle').textContent = book.title || '';
+            document.getElementById('restockBookStore').textContent = (book.storeName || '') + (book.storeId ? ` (${book.storeId})` : '');
+            document.getElementById('restockBookId').textContent = book.id;
+            document.getElementById('restockBookQuantity').value = book.quantity ?? book.stock ?? 0;
+            const modal = new bootstrap.Modal(document.getElementById('restockBookModal'));
+            modal.show();
+            const form = document.getElementById('restockBookForm');
+            form.onsubmit = async function(ev) {
+                ev.preventDefault();
+                const newQty = parseInt(document.getElementById('restockBookQuantity').value, 10);
+                if (isNaN(newQty) || newQty < 0) {
+                    alert('Please enter a valid quantity.');
+                    return;
+                }
+                await db.collection('books').doc(bookId).update({
+                    quantity: newQty,
+                    lastUpdated: new Date().toISOString()
+                });
+                modal.hide();
+                dashboard.loadAllData().then(() => dashboard.updateLowStockAlerts());
+                dashboard.showSuccess(`Stock updated for "${book.title}"`);
+            };
+        }
+    });
+});
