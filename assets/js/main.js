@@ -46,7 +46,7 @@ const getSession = () => {
 };
 const destroySession = () => localStorage.removeItem('admin_session');
 const protectPage = () => {
-  if (!getSession()) window.location.href = 'Leaf-Lore/index.html';
+  if (!getSession()) window.location.href = 'index.html';
 };
 
 // --- LOGIN LOGIC ---
