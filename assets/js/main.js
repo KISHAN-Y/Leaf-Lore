@@ -111,7 +111,6 @@ const setupLogoutButtons = () => {
       });
     }
   });
-  
 };
 
 // --- PASSWORD RESET FLOW ---
