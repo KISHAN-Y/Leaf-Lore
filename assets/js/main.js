@@ -93,7 +93,7 @@ if (loginForm) {
         { ...adminSessionData, adminId: foundId, loginTime: Date.now() },
         keepLoggedIn
       );
-      window.location.href = 'Leaf-Lore/dashboard.html';
+      window.location.href = 'dashboard.html';
       showSuccess('Login successful.');
     } catch {
         showError('Login failed. Try again.');
