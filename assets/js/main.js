@@ -107,7 +107,7 @@ const setupLogoutButtons = () => {
     if (btn.innerHTML.includes('fa-sign-out-alt')) {
       btn.addEventListener('click', () => {
         destroySession();
-        window.location.href = '../login.html';
+        window.location.href = "/Leaf-Lore/logout.html"
       });
     }
   });
