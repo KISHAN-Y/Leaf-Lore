@@ -15,7 +15,6 @@ const showSuccess = (msg) => showToast(msg, 'success');
 const showError = (msg) => showToast(msg, 'danger');
 const showWarning = (msg) => showToast(msg, 'warning');
 
-
 // Utility: SHA-256 hash and hex encoding
 const hashString = async (str) => {
   const encoder = new TextEncoder();
@@ -45,14 +44,16 @@ const getSession = () => {
   return data;
 };
 const destroySession = () => localStorage.removeItem('admin_session');
+
 const protectPage = () => {
-  // If a session exists, the page is protected, so do nothing.
   if (getSession()) {
+    // Session exists, okay to stay
+    document.body.style.visibility = 'visible'; // Show the page
     return;
   }
 
-  // If no session, redirect to the login page.
-  window.location.href = '../index.html' , 'index.html';
+  // No session, redirect to login immediately
+  window.location.href = 'index.html';
 };
 
 // --- LOGIN LOGIC ---
@@ -68,8 +69,7 @@ if (loginForm) {
     errorDiv.style.display = 'none';
 
     if (!email || !password) {
-        showError('Email and password are required.');
-
+      showError('Email and password are required.');
       return;
     }
 
@@ -99,24 +99,24 @@ if (loginForm) {
         { ...adminSessionData, adminId: foundId, loginTime: Date.now() },
         keepLoggedIn
       );
-      window.location.href = 'dashboard.html';
       showSuccess('Login successful.');
+
+      // Redirect after short delay to allow toast display (optional)
+      setTimeout(() => {
+        window.location.href = 'dashboard.html';
+      }, 300);
     } catch {
-        showError('Login failed. Try again.');
+      showError('Login failed. Try again.');
     }
   });
 }
 
 // --- LOGOUT LOGIC ---
 const setupLogoutButtons = () => {
-  // Select only buttons with the specific data-action attribute.
   document.querySelectorAll('[data-action="logout"]').forEach((btn) => {
     btn.addEventListener('click', () => {
       destroySession();
-      // After logout, always redirect to the root login page.
-      window.location.href = window.location.pathname.includes('/screens/')
-        ? '../index.html'
-        : 'index.html';
+      window.location.href = 'index.html';
     });
   });
 };
@@ -140,7 +140,7 @@ const setupPasswordResetFlow = () => {
     const recoveryCode = otpInputs.map((input) => input.value).join('');
 
     if (!email || recoveryCode.length < 6) {
-        showError('Please enter your email and the 6-digit recovery code.');
+      showError('Please enter your email and the 6-digit recovery code.');
       return;
     }
 
@@ -252,27 +252,33 @@ const setupPasswordResetFlow = () => {
   });
 };
 
+// --- INITIALIZATION ---
+
 window.addEventListener('DOMContentLoaded', () => {
   setupLogoutButtons();
   setupPasswordResetFlow();
 
+  // Session check & routing logic
   const path = window.location.pathname;
-  // Check if we are on the login page (root or index.html)
   const onLoginPage = path.endsWith('/') || path.endsWith('index.html');
-
   if (onLoginPage) {
-    // If we are on the login page and a session exists, redirect to the dashboard.
+    // Hide body initially to avoid flicker
+    document.body.style.visibility = 'visible'; // Show login page without redirect
     if (getSession()) {
+      // Already logged in, redirect to dashboard
       window.location.href = 'dashboard.html';
     }
   } else {
-    // For any other page, it's a protected route. Check for a session.
-    // If no session, the protectPage function will handle the redirect.
+    // For all other protected pages
+    // Hide body until session validated to avoid flicker
+    document.body.style.visibility = 'hidden';
     protectPage();
   }
 });
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Sidebar toggle & UI interactions - unchanged
+
   const sidebar = document.getElementById('sidebar');
   const sidebarCollapse = document.getElementById('sidebarCollapse');
   const overlay = document.querySelector('.overlay');
@@ -280,7 +286,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const openSidebar = () => {
     sidebar?.classList.add('active');
     overlay?.classList.add('active');
-    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    document.body.style.overflow = 'hidden';
   };
 
   const closeSidebar = () => {
@@ -316,6 +322,4 @@ document.addEventListener('DOMContentLoaded', () => {
   [...document.querySelectorAll('[data-bs-toggle="popover"]')].map(
     (el) => new bootstrap.Popover(el)
   );
-
-  // Removed restock button click handlers as per original comments
 });
