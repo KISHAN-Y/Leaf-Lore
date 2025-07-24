@@ -252,8 +252,6 @@ const setupPasswordResetFlow = () => {
   });
 };
 
-// --- PAGE INITIALIZATION ---
-// --- PAGE INITIALIZATION ---
 window.addEventListener('DOMContentLoaded', () => {
   setupLogoutButtons();
   setupPasswordResetFlow();
