@@ -1,326 +1,509 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Orders - Bookstore Admin</title>
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="icon" type="image/x-icon" href="../assets/images/ic_launcher.png">
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="../assets/images/ic_launcher.png"
+    />
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body>
-    <div id="lottie-background" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; overflow: hidden;"></div>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div
+      id="lottie-background"
+      style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 0;
+        pointer-events: none;
+        overflow: hidden;
+      "
+    ></div>
     <div class="wrapper">
-        <!-- Sidebar -->
-        <nav id="sidebar">
-            <div class="sidebar-header">
-                <img src="../assets/images/avatar.png" alt="Admin Avatar" class="avatar">
-                <h5>Bookstore Admin</h5>
+      <!-- Sidebar -->
+      <nav id="sidebar">
+        <div class="sidebar-header">
+          <img
+            src="../assets/images/avatar.png"
+            alt="Admin Avatar"
+            class="avatar"
+          />
+          <h5>Bookstore Admin</h5>
+        </div>
+        <ul class="list-unstyled components">
+          <li>
+            <a href="../dashboard.html"
+              ><i class="fas fa-home"></i> Dashboard</a
+            >
+          </li>
+          <li>
+            <a href="book-management.html"
+              ><i class="fas fa-book"></i> Book Management</a
+            >
+          </li>
+          <li>
+            <a href="user-management.html"
+              ><i class="fas fa-users"></i> User Management</a
+            >
+          </li>
+          <li class="active">
+            <a href="orders.html"
+              ><i class="fas fa-shopping-cart"></i> Orders</a
+            >
+          </li>
+          <li>
+            <a href="store-management.html"
+              ><i class="fas fa-store"></i> Stores</a
+            >
+          </li>
+          <li>
+            <a href="./settings.html"><i class="fas fa-cog"></i> Settings</a>
+          </li>
+        </ul>
+        <div class="sidebar-footer">
+          <a href="#"><i class="fas fa-question-circle"></i> Help and Docs</a>
+        </div>
+      </nav>
+
+      <!-- Page Content -->
+      <div class="overlay"></div>
+      <div id="content">
+        <!-- Top Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-dark">
+          <div class="container-fluid d-flex align-items-center">
+            <button
+              class="btn mobile-nav d-block d-lg-none"
+              id="sidebarCollapse"
+            >
+              <i class="fas fa-bars text-white"></i>
+            </button>
+            <div class="header-content">
+              <div class="header-title">
+                <h2 class="text-white fw-bold">Orders</h2>
+                <p class="text-white-50 small">
+                  Manage and track all customer orders
+                </p>
+              </div>
+              <div class="d-flex align-items-center">
+                <button class="btn btn-logout">
+                  <span class="d-none d-sm-inline">Logout</span>
+                  <i class="fas fa-sign-out-alt ms-2"></i>
+                </button>
+              </div>
             </div>
-            <ul class="list-unstyled components">
-                <li>
-                    <a href="../dashboard.html"><i class="fas fa-home"></i> Dashboard</a>
-                </li>
-                <li>
-                    <a href="book-management.html"><i class="fas fa-book"></i> Book Management</a>
-                </li>
-                <li>
-                    <a href="user-management.html"><i class="fas fa-users"></i> User Management</a>
-                </li>
-                <li class="active">
-                    <a href="orders.html"><i class="fas fa-shopping-cart"></i> Orders</a>
-                </li>
-                <li>
-                    <a href="store-management.html"><i class="fas fa-store"></i> Stores</a>
-                </li>
-                <li>
-                    <a href="./settings.html"><i class="fas fa-cog"></i> Settings</a>
-                </li>
-                
-            </ul>
-            <div class="sidebar-footer">
-                <a href="#"><i class="fas fa-question-circle"></i> Help and Docs</a>
-            </div>
+          </div>
         </nav>
 
-        <!-- Page Content -->
-        <div class="overlay"></div>
-        <div id="content">
-            <!-- Top Navigation -->
-            <nav class="navbar navbar-expand-lg navbar-dark">
-                <div class="container-fluid d-flex align-items-center">
-                    <button class="btn mobile-nav d-block d-lg-none" id="sidebarCollapse">
-                        <i class="fas fa-bars text-white"></i>
-                    </button>
-                    <div class="header-content">
-                        <div class="header-title">
-                            <h2 class="text-white fw-bold">Orders</h2>
-                            <p class="text-white-50 small">Manage and track all customer orders</p>
-                        </div>
-                        <div class="d-flex align-items-center">
-                            <button class="btn btn-logout">
-                                <span class="d-none d-sm-inline">Logout</span>
-                                <i class="fas fa-sign-out-alt ms-2"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </nav>
-
-            <!-- Order Stats (Hidden on mobile for cleaner look) -->
-            <div class="container-fluid mb-4 d-none d-md-block">
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="card">
-                            <div class="card-body">
-                                <h6 class="card-subtitle mb-2 text-muted">Total Orders</h6>
-                                <h2 class="card-title mb-0" id="total-orders">0</h2>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="card">
-                            <div class="card-body">
-                                <h6 class="card-subtitle mb-2 text-muted">Pending Orders</h6>
-                                <h2 class="card-title mb-0" id="pending-orders">0</h2>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="card">
-                            <div class="card-body">
-                                <h6 class="card-subtitle mb-2 text-muted">Delivered Orders</h6>
-                                <h2 class="card-title mb-0" id="delivered-orders">0</h2>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="card">
-                            <div class="card-body">
-                                <h6 class="card-subtitle mb-2 text-muted">Total Revenue</h6>
-                                <h2 class="card-title mb-0" id="total-revenue">₹0.00</h2>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Search and Filters -->
-            <div class="card mb-4">
+        <!-- Order Stats (Hidden on mobile for cleaner look) -->
+        <div class="container-fluid mb-4 d-none d-md-block">
+          <div class="row">
+            <div class="col-md-3">
+              <div class="card">
                 <div class="card-body">
-                    <div class="row g-3 align-items-center">
-                        <div class="col-lg-6">
-                            <div class="input-group">
-                                <span class="input-group-text bg-transparent border-end-0">
-                                    <i class="fas fa-search"></i>
-                                </span>
-                                <input type="text" id="order-search-bar" class="form-control border-start-0" placeholder="Search by Order ID, User, or Book...">
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <select id="order-status-filter" class="form-select">
-                                <option value="">All Statuses</option>
-                                <option value="pending">Pending</option>
-                                <option value="shipped">Shipped</option>
-                                <option value="delivered">Delivered</option>
-                                <option value="cancelled">Cancelled</option>
-                            </select>
-                        </div>
-                        <div class="col-lg-3">
-                            <select id="order-sort-select" class="form-select">
-                                <option value="date-desc">Sort by Date (Newest)</option>
-                                <option value="date-asc">Sort by Date (Oldest)</option>
-                                <option value="amount-desc">Sort by Amount (High-Low)</option>
-                                <option value="amount-asc">Sort by Amount (Low-High)</option>
-                            </select>
-                        </div>
-                    </div>
+                  <h6 class="card-subtitle mb-2 text-muted">Total Orders</h6>
+                  <h2 class="card-title mb-0" id="total-orders">0</h2>
                 </div>
+              </div>
             </div>
-
-            <!-- Orders Table / List -->
-            <div class="card">
+            <div class="col-md-3">
+              <div class="card">
                 <div class="card-body">
-                    <div> 
-                        <table class="table table-hover align-middle">
-                            <thead>
-                                <tr>
-                                    <th>Order ID</th>
-                                    <th>Customer</th>
-                                    <th>Books</th>
-                                    <th>Amount</th>
-                                    <th>Status</th>
-                                    <th>Date</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="orders-table-body">
-                                <!-- Orders will be dynamically inserted here -->
-                            </tbody>
-                        </table>
-                        <div id="orders-loader" class="text-center p-5" style="display: none;">
-                            <div class="spinner-border text-primary" role="status">
-                                <span class="visually-hidden">Loading...</span>
-                            </div>
-                        </div>
-                        <div id="no-orders-message" class="text-center p-5" style="display: none;">
-                            <h5>No orders found.</h5>
-                        </div>
-                    </div>
+                  <h6 class="card-subtitle mb-2 text-muted">Pending Orders</h6>
+                  <h2 class="card-title mb-0" id="pending-orders">0</h2>
                 </div>
+              </div>
             </div>
+            <div class="col-md-3">
+              <div class="card">
+                <div class="card-body">
+                  <h6 class="card-subtitle mb-2 text-muted">
+                    Delivered Orders
+                  </h6>
+                  <h2 class="card-title mb-0" id="delivered-orders">0</h2>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="card">
+                <div class="card-body">
+                  <h6 class="card-subtitle mb-2 text-muted">Total Revenue</h6>
+                  <h2 class="card-title mb-0" id="total-revenue">₹0.00</h2>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+
+        <!-- Search and Filters -->
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="row g-3 align-items-center">
+              <div class="col-lg-6">
+                <div class="input-group">
+                  <span class="input-group-text bg-transparent border-end-0">
+                    <i class="fas fa-search"></i>
+                  </span>
+                  <input
+                    type="text"
+                    id="order-search-bar"
+                    class="form-control border-start-0"
+                    placeholder="Search by Order ID, User, or Book..."
+                  />
+                </div>
+              </div>
+              <div class="col-lg-3">
+                <select id="order-status-filter" class="form-select">
+                  <option value="">All Statuses</option>
+                  <option value="pending">Pending</option>
+                  <option value="shipped">Shipped</option>
+                  <option value="delivered">Delivered</option>
+                  <option value="cancelled">Cancelled</option>
+                </select>
+              </div>
+              <div class="col-lg-3">
+                <select id="order-sort-select" class="form-select">
+                  <option value="date-desc">Sort by Date (Newest)</option>
+                  <option value="date-asc">Sort by Date (Oldest)</option>
+                  <option value="amount-desc">Sort by Amount (High-Low)</option>
+                  <option value="amount-asc">Sort by Amount (Low-High)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Orders Table / List -->
+        <div class="card">
+          <div class="card-body">
+            <div>
+              <table class="table table-hover align-middle">
+                <thead>
+                  <tr>
+                    <th>Order ID</th>
+                    <th>Customer</th>
+                    <th>Books</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="orders-table-body">
+                  <!-- Orders will be dynamically inserted here -->
+                </tbody>
+              </table>
+              <div
+                id="orders-loader"
+                class="text-center p-5"
+                style="display: none"
+              >
+                <div class="spinner-border text-primary" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+              </div>
+              <div
+                id="no-orders-message"
+                class="text-center p-5"
+                style="display: none"
+              >
+                <h5>No orders found.</h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    
+
     <!-- All Custom Styles -->
     <style>
-        /* FIXED: Main Orders List (Mobile) - Updated for dark background */
-        @media screen and (max-width: 991px) {
-            #content .card .table { border: 0; }
-            #content .card .table thead { display: none; }
-            #content .card .table tr {
-                display: block; margin-bottom: 1.5rem; border: 1px solid rgba(255, 255, 255, 0.3);
-                border-radius: .375rem; padding: 1rem; box-shadow: 0 .125rem .25rem rgba(0,0,0,.2);
-                background: rgba(255, 255, 255, 0.1);
-            }
-            #content .card .table tr:last-of-type { margin-bottom: 0; }
-            #content .card .table td {
-                display: flex; justify-content: space-between; align-items: center;
-                border: 0; padding: .6rem 0; text-align: right;
-                color: #ffffff !important;
-            }
-            #content .card .table td:not(:last-child) { border-bottom: 1px dashed rgba(255, 255, 255, 0.3); }
-            #content .card .table td::before {
-                content: attr(data-label); font-weight: 600; text-align: left; padding-right: 1rem;
-                color: #ffffff !important;
-            }
-            #content .card .table td[data-label="Customer"] { align-items: flex-start; }
-            #content .card .table .customer-info { text-align: right; word-break: break-all; color: #ffffff !important; }
-            #content .card .table td[data-label="Actions"] .btn-group { width: 100%; }
-            #content .card .table td[data-label="Actions"] .btn { flex-grow: 1; }
+      /* FIXED: Main Orders List (Mobile) - Updated for dark background */
+      @media screen and (max-width: 991px) {
+        #content .card .table {
+          border: 0;
         }
+        #content .card .table thead {
+          display: none;
+        }
+        #content .card .table tr {
+          display: block;
+          margin-bottom: 1.5rem;
+          border: 1px solid rgba(255, 255, 255, 0.3);
+          border-radius: 0.375rem;
+          padding: 1rem;
+          box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.2);
+          background: rgba(255, 255, 255, 0.1);
+        }
+        #content .card .table tr:last-of-type {
+          margin-bottom: 0;
+        }
+        #content .card .table td {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          border: 0;
+          padding: 0.6rem 0;
+          text-align: right;
+        }
+        #content .card .table td:not(:last-child) {
+          border-bottom: 1px dashed rgba(255, 255, 255, 0.3);
+        }
+        #content .card .table td::before {
+          content: attr(data-label);
+          font-weight: 600;
+          text-align: left;
+          padding-right: 1rem;
+        }
+        #content .card .table td[data-label="Customer"] {
+          align-items: flex-start;
+        }
+        #content .card .table .customer-info {
+          text-align: right;
+          word-break: break-all;
+        }
+        #content .card .table td[data-label="Actions"] .btn-group {
+          width: 100%;
+        }
+        #content .card .table td[data-label="Actions"] .btn {
+          flex-grow: 1;
+        }
+      }
 
-        /* Order Details Modal Items (Mobile) - Updated for dark background */
-        .order-items-container { max-height: 350px; overflow-y: auto; }
-        @media screen and (max-width: 767px) {
-            .order-items-container thead { display: none; }
-            .order-items-container .table, .order-items-container tbody, .order-items-container tfoot, .order-items-container tr {
-                display: block; width: 100%;
-                color: #ffffff !important;
-            }
-            .order-items-container tbody tr {
-                padding-bottom: 1rem; margin-bottom: 1rem; border-bottom: 1px solid #dee2e6;
-            }
-            .order-items-container tbody tr:last-of-type { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
-            .order-items-container td {
-                display: flex; justify-content: space-between; align-items: center;
-                text-align: right; padding: .3rem 0; border: none;
-            }
-            .order-items-container td::before { content: attr(data-label); font-weight: 600; text-align: left; padding-right: 1rem; color: #ffffff; }
-            .order-items-container td[data-label="Item"] { display: block; text-align: left; }
-            .order-items-container td[data-label="Item"]::before { display: none; }
-            .order-items-container tfoot tr { padding-top: 1rem; margin-top: 1rem; border-top: 2px solid #dee2e6; }
-            .order-items-container tfoot td[colspan="3"] { display: none; }
-            .order-items-container tfoot #subtotal::before { content: 'Subtotal:'; }
-            .order-items-container tfoot #shipping::before { content: 'Shipping:'; }
-            .order-items-container tfoot #taxes::before { content: 'Taxes:'; }
-            .order-items-container tfoot #orderTotal::before { content: 'Total:'; font-weight: bold; color: #212529; }
-            .order-items-container tfoot tr:last-of-type td { font-weight: bold; font-size: 1.1rem; }
+      /* Order Details Modal Items (Mobile) - Updated for dark background */
+      .order-items-container {
+        max-height: 350px;
+        overflow-y: auto;
+      }
+      @media screen and (max-width: 767px) {
+        .order-items-container thead {
+          display: none;
         }
+        .order-items-container .table,
+        .order-items-container tbody,
+        .order-items-container tfoot,
+        .order-items-container tr {
+          display: block;
+          width: 100%;
+          color: #ffffff !important;
+        }
+        .order-items-container tbody tr {
+          padding-bottom: 1rem;
+          margin-bottom: 1rem;
+          border-bottom: 1px solid #dee2e6;
+        }
+        .order-items-container tbody tr:last-of-type {
+          margin-bottom: 0;
+          padding-bottom: 0;
+          border-bottom: none;
+        }
+        .order-items-container td {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          text-align: right;
+          padding: 0.3rem 0;
+          border: none;
+        }
+        .order-items-container td::before {
+          content: attr(data-label);
+          font-weight: 600;
+          text-align: left;
+          padding-right: 1rem;
+          color: #ffffff;
+        }
+        .order-items-container td[data-label="Item"] {
+          display: block;
+          text-align: left;
+        }
+        .order-items-container td[data-label="Item"]::before {
+          display: none;
+        }
+        .order-items-container tfoot tr {
+          padding-top: 1rem;
+          margin-top: 1rem;
+          border-top: 2px solid #dee2e6;
+        }
+        .order-items-container tfoot td[colspan="3"] {
+          display: none;
+        }
+        .order-items-container tfoot #subtotal::before {
+          content: "Subtotal:";
+        }
+        .order-items-container tfoot #shipping::before {
+          content: "Shipping:";
+        }
+        .order-items-container tfoot #taxes::before {
+          content: "Taxes:";
+        }
+        .order-items-container tfoot #orderTotal::before {
+          content: "Total:";
+          font-weight: bold;
+          color: #212529;
+        }
+        .order-items-container tfoot tr:last-of-type td {
+          font-weight: bold;
+          font-size: 1.1rem;
+        }
+      }
     </style>
-    
+
     <!-- Order Details Modal -->
-    <div class="modal fade" id="orderDetailsModal" tabindex="-1" aria-labelledby="orderDetailsModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="orderDetailsModalLabel">Order Details</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div
+      class="modal fade"
+      id="orderDetailsModal"
+      tabindex="-1"
+      aria-labelledby="orderDetailsModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="orderDetailsModalLabel">
+              Order Details
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body p-4">
+            <div class="row align-items-start">
+              <div class="col-12 col-md-5 border-end-md pe-md-4 mb-4 mb-md-0">
+                <div class="d-flex flex-column mb-4">
+                  <div
+                    class="d-flex justify-content-between align-items-center mb-3"
+                  >
+                    <h4 class="fw-bold mb-0" id="orderId">#ORDER_ID</h4>
+                    <span class="badge rounded-pill bg-warning" id="orderStatus"
+                      >Pending</span
+                    >
+                  </div>
+                  <p class="text-body-primary mb-3">
+                    Placed on <span id="orderDate">N/A</span>
+                  </p>
+
+                  <h6 class="fw-bold mt-3 mb-2">Customer Information</h6>
+                  <div class="card bg-light p-3 mb-3">
+                    <p class="mb-1 fw-medium" id="customerName">N/A</p>
+                    <p class="mb-1 small text-secondary" id="customerEmail">N/A</p>
+                    <p class="mb-0 small" id="customerPhone">N/A</p>
+                  </div>
+
+                  <h6 class="fw-bold mt-3 mb-2">Shipping Address</h6>
+                  <div class="card bg-light p-3">
+                    <div id="shippingAddressContent">N/A</div>
+                  </div>
                 </div>
-                <div class="modal-body p-4">
-                    <div class="row align-items-start">
-                        <div class="col-12 col-md-5 border-end-md pe-md-4 mb-4 mb-md-0">
-                            <div class="d-flex flex-column mb-4">
-                                <div class="d-flex justify-content-between align-items-center mb-3">
-                                    <h4 class="fw-bold mb-0" id="orderId">#ORDER_ID</h4>
-                                    <span class="badge rounded-pill bg-warning" id="orderStatus">Pending</span>
-                                </div>
-                                <p class="text-body-primary mb-3">Placed on <span id="orderDate">N/A</span></p>
-                                
-                                <h6 class="fw-bold mt-3 mb-2">Customer Information</h6>
-                                <div class="card bg-light p-3 mb-3">
-                                    <p class="mb-1 fw-medium" id="customerName">N/A</p>
-                                    <p class="mb-1 small text-muted" id="customerEmail">N/A</p>
-                                    <p class="mb-0 small" id="customerPhone">N/A</p>
-                                </div>
-                                
-                                <h6 class="fw-bold mt-3 mb-2">Shipping Address</h6>
-                                <div class="card bg-light p-3">
-                                    <div id="shippingAddressContent">N/A</div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="col-12 col-md-7 ps-md-4">
-                            <h5 class="fw-bold mb-4">Order Items</h5>
-                            <div class="table-responsive order-items-container">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>Item</th>
-                                            <th>Price</th>
-                                            <th>Qty</th>
-                                            <th class="text-end">Total</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="orderItemsTable">
-                                        <!-- Order items will be inserted here -->
-                                    </tbody>
-                                    <tfoot class="table-group-divider">
-                                        <tr>
-                                            <td colspan="3" class="text-end fw-medium">Subtotal:</td>
-                                            <td class="text-end" id="subtotal">₹0.00</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="3" class="text-end fw-medium">Shipping:</td>
-                                            <td class="text-end" id="shipping">₹0.00</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="3" class="text-end fw-medium">Taxes:</td>
-                                            <td class="text-end" id="taxes">₹0.00</td>
-                                        </tr>
-                                        <tr class="border-top">
-                                            <td colspan="3" class="text-end fw-bold">Total:</td>
-                                            <td class="text-end fw-bold" id="orderTotal">₹0.00</td>
-                                        </tr>
-                                    </tfoot>
-                                </table>
-                            </div>
-                            
-                            <div class="mt-4">
-                                <h6 class="fw-bold mb-3">Update Status</h6>
-                                <div class="btn-group w-100" role="group">
-                                    <button type="button" class="btn btn-outline-warning" data-status="pending">Pending</button>
-                                    <button type="button" class="btn btn-outline-info" data-status="shipped">Shipped</button>
-                                    <button type="button" class="btn btn-outline-success" data-status="delivered">Delivered</button>
-                                    <button type="button" class="btn btn-outline-danger" data-status="cancelled">Cancel</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+              </div>
+
+              <div class="col-12 col-md-7 ps-md-4">
+                <h5 class="fw-bold mb-4">Order Items</h5>
+                <div class="table-responsive order-items-container">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Item</th>
+                        <th>Price</th>
+                        <th>Qty</th>
+                        <th class="text-end">Total</th>
+                      </tr>
+                    </thead>
+                    <tbody id="orderItemsTable">
+                      <!-- Order items will be inserted here -->
+                    </tbody>
+                    <tfoot class="table-group-divider">
+                      <tr>
+                        <td colspan="3" class="text-end fw-medium">
+                          Subtotal:
+                        </td>
+                        <td class="text-end" id="subtotal">₹0.00</td>
+                      </tr>
+                      <tr>
+                        <td colspan="3" class="text-end fw-medium">
+                          Shipping:
+                        </td>
+                        <td class="text-end" id="shipping">₹0.00</td>
+                      </tr>
+                      <tr>
+                        <td colspan="3" class="text-end fw-medium">Taxes:</td>
+                        <td class="text-end" id="taxes">₹0.00</td>
+                      </tr>
+                      <tr class="border-top">
+                        <td colspan="3" class="text-end fw-bold">Total:</td>
+                        <td class="text-end fw-bold" id="orderTotal">₹0.00</td>
+                      </tr>
+                    </tfoot>
+                  </table>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" id="printInvoice">
-                        <i class="fas fa-print me-2"></i>Print Invoice
+
+                <div class="mt-4">
+                  <h6 class="fw-bold mb-3">Update Status</h6>
+                  <div class="btn-group w-100" role="group">
+                    <button
+                      type="button"
+                      class="btn btn-outline-warning"
+                      data-status="pending"
+                    >
+                      Pending
                     </button>
+                    <button
+                      type="button"
+                      class="btn btn-outline-info"
+                      data-status="shipped"
+                    >
+                      Shipped
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-outline-success"
+                      data-status="delivered"
+                    >
+                      Delivered
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-outline-danger"
+                      data-status="cancelled"
+                    >
+                      Cancel
+                    </button>
+                  </div>
                 </div>
+              </div>
             </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="button" class="btn btn-primary" id="printInvoice">
+              <i class="fas fa-print me-2"></i>Print Invoice
+            </button>
+          </div>
         </div>
+      </div>
     </div>
 
     <!-- Bootstrap JS and dependencies -->
@@ -331,19 +514,19 @@
     <script src="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.28/dist/unicornStudio.umd.js"></script>
     <script>
       // Will initialize every element with "data-us-project" or "data-us-project-src" on the page
-      UnicornStudio.init().then(scenes => {
+      UnicornStudio.init().then((scenes) => {
         // scenes are ready
       });
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
     <script>
       lottie.loadAnimation({
-        container: document.getElementById('lottie-background'),
-        renderer: 'svg',
+        container: document.getElementById("lottie-background"),
+        renderer: "svg",
         loop: true,
         autoplay: true,
-        path: '../assets/images/spring.json' // <-- update this path if needed
+        path: "../assets/images/spring.json", // <-- update this path if needed
       });
     </script>
-</body>
+  </body>
 </html>
